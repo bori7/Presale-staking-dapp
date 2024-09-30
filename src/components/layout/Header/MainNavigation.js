@@ -25,10 +25,10 @@ const presaleLink = {
   href: "/pre-sale",
 };
 
-// const bridgeLink = {
-//   label: "Bridge",
-//   href: "https://bridge.poly.network/token/"
-// }
+const bridgeLink = {
+  label: "Bridge",
+  href: "https://bridge.poly.network/token/"
+}
 
 //const comingSoonLink = ["Swap", "Mint", "Stake"];
 const comingSoonLink = ["Stake"];
@@ -80,7 +80,7 @@ const MainNavigation = () => {
               mainLinks={mainLinks}
               moreMenuLinks={moreMenuLinks}
               comingSoonLink={comingSoonLink}
-              // bridgeLink={bridgeLink}
+              bridgeLink={bridgeLink}
               presaleLink={presaleLink}
               handleClickContracts={handleContractsDialogToggle}
             />

@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
-import { useWeb3React } from "@web3-react/core";
-import { useWalletConnector, setNet } from "./WalletConnector.js";
+import {useEffect, useState} from "react";
+import {useWeb3React} from "@web3-react/core";
+import {useWalletConnector, setNet} from "./WalletConnector.js";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
@@ -11,104 +11,105 @@ import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import { EthereumLogo, BinanceLogo } from "../ui/NetworkLogos";
-import { MetamaskLogo, WalletConnectLogo } from "../ui/WalletLogos";
+import {EthereumLogo, BinanceLogo} from "../ui/NetworkLogos";
+import {MetamaskLogo, WalletConnectLogo} from "../ui/WalletLogos";
 import Avatar from "@mui/material/Avatar";
 import Badge from "@mui/material/Badge";
-import { styled } from "@mui/material/styles";
+import {styled} from "@mui/material/styles";
 import DoneIcon from "@mui/icons-material/Done";
-import { green } from "@mui/material/colors";
+import {green} from "@mui/material/colors";
 
-const SmallAvatar = styled(Avatar)(({ theme }) => ({
-  width: 22,
-  height: 22,
-  border: `2px solid ${theme.palette.background.paper}`,
+const SmallAvatar = styled(Avatar)(({theme}) => ({
+    width: 22,
+    height: 22,
+    border: `2px solid ${theme.palette.background.paper}`,
 }));
 
 const networks = [
-  //{label: "Ethereum", value: "eth", icon: <EthereumLogo width={60} />},
-  { label: "Binance", value: "bsc", icon: <BinanceLogo width={60} /> },
+    //{label: "Ethereum", value: "eth", icon: <EthereumLogo width={60} />},
+    {label: "Binance", value: "bsc", icon: <BinanceLogo width={60}/>},
 ];
 
 const wallets = [
-  { label: "Metamask", value: "injected", icon: <MetamaskLogo width={60} /> },
-  {
-    label: "Wallet Connect",
-    value: "walletconnect",
-    icon: <WalletConnectLogo width={60} />,
-  },
+    {label: "Metamask", value: "injected", icon: <MetamaskLogo width={60}/>},
+    {
+        label: "Wallet Connect",
+        value: "walletconnect",
+        icon: <WalletConnectLogo width={60}/>,
+    },
 ];
 
 const setWalletProvider = (wallet) => {
-  localStorage.setItem("wallet", wallet);
+    localStorage.setItem("wallet", wallet);
 };
 
 const NetworkWalletProviders = ({
-  walletProvidersDialogOpen,
-  handleWalletProvidersDialogToggle,
-}) => {
-  const { library, account } = useWeb3React();
-  const { loginMetamask, loginWalletConnect } = useWalletConnector();
-  const [selectedNetwork, setSelectedNetwork] = useState(null);
-  const [selectedWallet, setSelectedWallet] = useState(null);
+                                    walletProvidersDialogOpen,
+                                    handleWalletProvidersDialogToggle,
+                                }) => {
+    const {library, account} = useWeb3React();
+    const {loginMetamask, loginWalletConnect} = useWalletConnector();
+    const [selectedNetwork, setSelectedNetwork] = useState(null);
+    const [selectedWallet, setSelectedWallet] = useState(null);
 
-  const handleSelectNetwork = (network) => {
-    setSelectedNetwork(network);
-  };
+    const handleSelectNetwork = (network) => {
+        setSelectedNetwork(network);
+    };
 
-  const handleSelectWallet = (wallet) => {
-    setSelectedWallet(wallet);
-  };
+    const handleSelectWallet = (wallet) => {
+        setSelectedWallet(wallet);
+    };
 
-  useEffect(() => {
-    if (library) {
-      handleWalletProvidersDialogToggle();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [library, account]);
+    useEffect(() => {
+        if (library) {
+            handleWalletProvidersDialogToggle();
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [library, account]);
 
-  const handleConnectWallet = () => {
-    if (selectedWallet && selectedNetwork) {
-      const walletprovider = `${selectedWallet}_${selectedNetwork}`;
-      connectWallet(walletprovider);
-    }
-  };
+    const handleConnectWallet = () => {
+        if (selectedWallet && selectedNetwork) {
+            const walletprovider = `${selectedWallet}_${selectedNetwork}`;
+            // console.log(walletprovider);
+            connectWallet(walletprovider);
+        }
+    };
 
-  const connectWallet = async (walletprovider) => {
-    localStorage.setItem("connected", true);
+    const connectWallet = async (walletprovider) => {
+        localStorage.setItem("connected", true);
 
-    switch (walletprovider) {
-      case "injected_eth":
-        setWalletProvider("injected_eth");
-        setNet(0);
-        loginMetamask();
-        break;
-      case "walletconnect_eth":
-        setWalletProvider("walletconnect_eth");
-        setNet(0);
-        loginWalletConnect();
-        break;
-      case "injected_bsc":
-        setWalletProvider("injected_bsc");
-        setNet(1);
-        loginMetamask();
-        break;
-      case "walletconnect_bsc":
-        setWalletProvider("walletconnect_bsc");
-        setNet(1);
-        loginWalletConnect();
-        break;
-      default:
-        return null;
-    }
-  };
+        switch (walletprovider) {
+            case "injected_eth":
+                setWalletProvider("injected_eth");
+                setNet(0);
+                loginMetamask();
+                break;
+            case "walletconnect_eth":
+                setWalletProvider("walletconnect_eth");
+                setNet(0);
+                loginWalletConnect();
+                break;
+            case "injected_bsc":
+                setWalletProvider("injected_bsc");
+                setNet(1);
+                loginMetamask();
+                break;
+            case "walletconnect_bsc":
+                setWalletProvider("walletconnect_bsc");
+                setNet(1);
+                loginWalletConnect();
+                break;
+            default:
+                return null;
+        }
+    };
 
-  useEffect(() => {
-    if (localStorage.getItem("connected")) {
-      connectWallet(localStorage.getItem("wallet"));
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    useEffect(() => {
+        if (localStorage.getItem("connected")) {
+            connectWallet(localStorage.getItem("wallet"));
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
   return (
     <Dialog

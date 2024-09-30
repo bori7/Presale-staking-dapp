@@ -11,17 +11,17 @@ import Divider from "@mui/material/Divider";
 
 const drawerWidth = 220;
 
-//const SideDrawer = ({mainLinks, bridgeLink, presaleLink, moreMenuLinks, comingSoonLink, onClose, open, window, handleClickContracts}) => {
-const SideDrawer = ({
-  mainLinks,
-  presaleLink,
-  moreMenuLinks,
-  comingSoonLink,
-  onClose,
-  open,
-  window,
-  handleClickContracts,
-}) => {
+const SideDrawer = ({mainLinks, bridgeLink, presaleLink, moreMenuLinks, comingSoonLink, onClose, open, window, handleClickContracts}) => {
+// const SideDrawer = ({
+//   mainLinks,
+//   presaleLink,
+//   moreMenuLinks,
+//   comingSoonLink,
+//   onClose,
+//   open,
+//   window,
+//   handleClickContracts,
+// }) => {
   const router = useLocation();
   const container =
     window !== undefined ? () => window().document.body : undefined;
